@@ -1,7 +1,23 @@
-<h1><a href="data:text/html,%20%3Chtml%3E%3Chead%3E%3C/head%3E%3Cbody%3E%3Cdiv%20contenteditable%20style=%22height:%2090%25%22%3EStart Editing...%3C/div%3E%3Cbutton%20onclick=%22location='data:text/html,%20%3Chtml%3E'%20+%20escape(window.document.documentElement.innerHTML)%20+%20'%3C/html%3E'%22%3Esave%3C/button%3E%3C/body%3E%3C/html%3E">Quick Editor</a></h1>
-
-<br><br>
-<h2>Source</h2>
-data:text/html, &lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;div contenteditable style="height: 90%"&gt;Start Editing...&lt;/div&gt;&lt;button onclick="location='data:text/html, &lt;html&gt;' + escape(window.document.documentElement.innerHTML) + '&lt;/html&gt;'"&gt;save&lt;/button&gt;&lt;/body&gt;&lt;/html&gt;
+<!doctype HTML>
+<html>
+  <head>
+    <title>Quick Editor</title>
+    <script src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+  </head>
+  <body>
+    <h1><a href="#" id="quickeditor">Quick Editor</a></h1>
+    <h2>Source</h2><div id="source"></div>
+    <script>
+      $(function() {
+        var href = $.trim($('#quickeditorhref').html());
+        $('#quickeditor').prop('href', href);
+        $('#source').text(href);
+      });
+    </script>
+    <script type="text/html" id="quickeditorhref">
+    data:text/html, <html><head></head><body style="margin:0"><button onclick="location='data:text/html, <html>' + escape(window.document.documentElement.innerHTML) + '</html>'">save</button><div contenteditable style="position: absolute;top: 30px;bottom: 0px;width: 100%;">Start Editing...</div></body></html>
+    </script>
+  </body>
+</html>
 
 
