@@ -68,23 +68,23 @@
         <script src="bootstrap/js/bootstrap.min.js"></script>
         <script src="zerovalidate.js"></script>
         <script>
-            $(function() {
-                $('form').zerovalidate({
-                    email: function(value) {
-                        if (!/\w{2,}@\w{2,}\.\w{2,}/.test(value)) { return 'Please enter a valid email'; }
-                    },
-                    notBlank: function(value, $input) {
-                        if (!$.trim(value)) { return $input.parent().prev().text() + ' cannot be left blank'; }
-                    },
-                    password: function(value) {
-                        if ($.trim(value).length < 6) { return 'Please enter at least 6 characters'; }
-                    },
-                    passwordMatch: function(value, $input, $form) {
-                        if (!value || value !== $form.find('.' + $input.data('match')).val()) { return 'Passwords must match'; }
-                    },
-                    sayYes: function(checked) { if (!checked) { return 'Please accept the terms'; } }
-                });
-            });
+			$(function() {
+				$('form').zerovalidate({
+					email: function(value) {
+						if (!/\w{2,}@\w{2,}\.\w{2,}/.test(value)) { return 'Please enter a valid email'; }
+					},
+					notBlank: function(value, $input) {
+						if (!$.trim(value)) { return $input.parent().prev().text() + ' cannot be left blank'; }
+					},
+					password: function(value) {
+						if ($.trim(value).length < 6) { return 'Please enter at least 6 characters'; }
+					},
+					passwordMatch: function(value, $input, $form) {
+						if (!value || value !== $form.find('.' + $input.data('match')).val()) { return 'Passwords must match'; }
+					},
+					sayYes: function(checked) { if (!checked) { return 'Please accept the terms'; } }
+				});
+			});
         </script>
     </body>
 </html>
