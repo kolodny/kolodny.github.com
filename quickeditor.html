@@ -4,8 +4,9 @@
     <title>Quick Editor</title>
     <script src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
   </head>
-  <body>
+  <body>    
     <h1><a href="#" id="quickeditor">Quick Editor</a></h1>
+    <div>Click The link or drag to your bookmarks bar</div>
     <h2>Source</h2><div id="source"></div>
     <script>
       $(function() {
@@ -15,7 +16,7 @@
       });
     </script>
     <script type="text/html" id="quickeditorhref">
-    data:text/html, <html><head><title>Quick Editor</title></head><body style="margin:0"><button style="display:block;margin: 2px auto;width: 25%;height: 30px;" onclick="location='data:text/html, <html>' + escape(window.document.documentElement.innerHTML) + '</html>'">Save</button><div contenteditable style="position: absolute;top: 35px;bottom: 0px;width: 100%;outline: 1px solid;"></div></body></html>
+    data:text/html,<html><title>Quick Editor</title><body style="margin:0"><table height="100%" width="100%"><tr height="20px"><td><button style="position:absolute;top:0" onclick="location='data:text/html,<html>'+escape(document.documentElement.innerHTML)+'</html>'">save</button></td></tr><tr><td><div contenteditable style="height:100%"></div></td></tr></table><!-- https://github.com/kolodny/quickeditor --></body></html>
     </script>
   </body>
 </html>
