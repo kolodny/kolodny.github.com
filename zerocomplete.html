@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset=utf-8 />
+        <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" type="text/css" />
+		<style>body { padding-top: 20px; }</style>
+        <title>Zerocomplete</title>
+    </head>
+    <body>
+		<div class="container-fluid">
+			<div class="row-fluid">
+				<div class="span12">
+					<input id="zc1" type="text" placeholder="Type something…">
+					<input id="zc2" type="text" placeholder="Type something…">
+					<input id="zc3" type="text" placeholder="Type something…">
+					<input id="zc4" type="text" placeholder="Type something…">
+					<input id="zc5" type="text" placeholder="Type 'a'" data-source='[{"label": "a", "id" : 1},{"label": "aa", "id" : 3},{"label": "aaa", "id" : 9} ]' data-provide="zerocomplete">
+					<input id="zc6" type="text" placeholder="Type anything…">
+				</div>
+			</div>
+		</div>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+        <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.js"></script>
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-mockjax/1.5.1/jquery.mockjax.js"></script>
+		<script src="db.js"></script>
+		<script src='zerocomplete.js'></script>
+		<script>
+			
+			var regexify =  function(str) { return new RegExp(str.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&'), 'ig'); };
+			
+			$.mockjax(function(settings) {
+				var matches = settings.url.match(/^\/ajax.php\?search=([^&]*)&term=(.*)$/);
+				if ( matches ) {
+					return {
+						contentType: 'text/json',
+						response: function() {
+							var ret;
+							
+							if (matches[1] === 'film') {
+								ret = search.film(matches[2]);
+							} else if (matches[1] === 'film_array') {
+								ret = search.film(matches[2], true);
+							}
+							this.responseText = JSON.stringify({ data: ret });
+						}
+				  };
+				}
+				return;
+			});
+			
+			var search = {
+				film: function(term, returnArray) {
+					var ret = [],
+						regexStr = regexify(term);
+						
+					$.each(sakila.film, function(i, obj) {
+						if (regexStr.test(obj.title)) {
+							if (returnArray) {
+								ret.push(obj.title);
+							} else {
+								ret.push(obj);
+							}
+						}
+					});
+					return ret;
+				}
+			}
+		</script>
+		<script class="example">
+$(function() {
+	$('#zc1').zerocomplete({
+		source: '/ajax.php?search=film',
+		getPath: function(res) { return res.data; },
+		display: function(obj) { return obj.title },
+		select: function(e, obj) { console.log(e.timeStamp, 'You chose', obj, 'on', this); }
+	});
+});
+		</script>
+		
+		<script class="example">
+$(function() {
+	$('#zc2').zerocomplete({
+		source: '/ajax.php?search=film_array',
+		getPath: function(res) { return res.data; },
+		select: function(e, obj) { console.log('You chose', obj, 'on', this); }
+	});
+});
+		</script>
+		
+		<script class="example">
+$(function() {
+	$('#zc3').zerocomplete({
+		source: [{id:1, label: 'apple'}, {id:2, label: 'banana'}, {id:3, label: 'cherry'}, {id:4, label: 'dragonfruit'}]
+	}).on('zerocompleteselect', function(e, obj) { console.log('You chose', obj, 'on', this); });
+});
+		</script>
+		
+		<script class="example">
+$(function() {
+	$('#zc4').zerocomplete({
+		source: ['Alice', 'Bob', 'Charlie', 'David'],
+		select: function(e, obj) { console.log('You chose', obj, 'on', this); }
+	});
+});
+		</script>
+		
+		<script class="example">
+$(function() {
+	$('#zc5').on('zerocompleteselect', function(e, obj) {
+		console.log('you chose', obj.item);
+	});
+});
+		</script>
+		
+		<script class="example">
+$(function() {
+	$('#zc6').zerocomplete({
+		source: 'test.php',
+		get: function(url, cb) {
+			cb( [{ url: url, label: this }, { url: url + '2', label: this + '2' }, { url: url + '3', label: this + '3' }] );
+		},
+		select: function(e, obj) { console.log('You chose', obj, 'on', this); }
+	});
+});
+		</script>
+		
+		<script>
+			$(function() {
+				$('[id^=zc]').each(function(i) {
+					$(this).wrap('<div>').parent().append('<pre><code>' + $('.example').eq(i).html() + '</code></pre><br><br>')
+					//$('<code>' + i + '</code>').wrap('<div>')
+				});
+			});
+		</script>
+    </body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<meta charset=utf-8 />
+		<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet" type="text/css" />
+		<style>
+			body {
+				padding-top: 30px;
+			}
+		</style>
+		<title>initpage</title>
+	</head>
+	
+	<body>
+		<div class="container">
+			<div class="row">
+				<div class="span12">
+					<label>
+						Enter something:
+						<input type="text" id="typeaheadObj" />	
+					</label>					
+					<div id="result"></div>
+				</div>
+			</div>
+		</div>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script>
+		<script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+		<script src="typeaheadObj.js"></script>
+		<script>
+			var data = [{
+				name: 'test',
+				id: 22,
+				page: '/test.php'
+			}, {
+				name: 'test2',
+				id: 23,
+				page: '/test2.php'
+			}, {
+				name: 'test3',
+				id: 23,
+				page: '/testpage.php'
+			}, {
+				name: 'main',
+				id: 15,
+				page: '/index.php'
+			}];
+			$(function() {
+				$('#typeaheadObj').typeaheadObj({
+					source: data,
+					display: 'name',
+					update: function(obj) {
+						$('#result').append('<div>You chose ' + JSON.stringify(obj) + '</div>');
+					}
+				});
+			});
+		</script>
+	</body>
+
+</html>

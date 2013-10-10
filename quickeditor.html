@@ -1,0 +1,27 @@
+<!doctype HTML>
+<html>
+  <head>
+    <title>Quick Editor</title>
+    <script src="http://code.jquery.com/jquery-1.10.0.min.js"></script>
+  </head>
+  <body>
+    <a href="https://github.com/kolodny/quickeditor"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png" alt="Fork me on GitHub"></a>
+    <h1><a style="border:2px solid black" href="#" id="quickeditor">Quick Editor</a>
+    </h1>
+    <div>^^^ Click The link or drag to your bookmarks bar for a bookmarkable savable editor ^^^</div>
+    <br><br><br><br><br><br><br><br><br>
+    <h2>Source</h2><div id="source"></div>
+    <script>
+      $(function() {
+        var href = $.trim($('#quickeditorhref').html());
+        $('#quickeditor').prop('href', href);
+        $('#source').text(href);
+      });
+    </script>
+    <script type="text/html" id="quickeditorhref">
+    data:text/html,<html><title>Quick Editor</title><body style="margin:0"><table height="100%" width="100%"><tr height="20px"><td><button style="position:absolute;top:0" onclick="location='data:text/html,<html>'+escape(document.documentElement.innerHTML)+'</html>'">save</button></td></tr><tr><td><div contenteditable style="height:100%;border:1px solid;" onfocus="this.innerHTML='';this.removeAttribute('onfocus')">Edit Me</div></td></tr></table><!-- https://github.com/kolodny/quickeditor --></body></html>
+    </script>
+  </body>
+</html>
+
+
