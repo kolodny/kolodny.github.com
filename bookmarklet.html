@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<title>Bookmarkleter</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+	</head>
+	<body>
+		<a href="#">Bookmarklet</a>
+		<button>Update</button><br>
+		<textarea cols=100 rows=30></textarea>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<script>
+			$(function() {
+				var $div = $('<div>').insertAfter('br');
+				$('button').click(function() {
+					var codeText = $('textarea').val(),
+						startRegex = /^\s*\(\s*function\b/,
+						endRegx = /}\s*\)\s*\(\s*[A-Za-z0-9_$.,]*\s*\)\s*;*\s*$/,
+						jsCode = startRegex.test(codeText) && endRegx.test(codeText) ?
+							codeText :
+							'(function() { ' + codeText + '})()';
+							
+					$.ajax({
+						url: "//closure-compiler.appspot.com/compile",
+						type: "POST",
+						dataType: "html",
+						data: {
+							output_info: 'compiled_code',
+							output_format: 'text',
+							compilation_level: 'WHITESPACE_ONLY',
+
+							js_code: jsCode
+						},
+						success: function (data, textStatus, xhr) {
+							$('a').prop('href', 'javascript:' + data.replace(/\n/g, ' '));
+							$div.html('updated!');
+						},
+						error: function () {
+							console.log('Some error happened');
+						}
+					});
+					$div.html('updating...');
+				});
+			});
+			function regexSpace(regex) {
+				return eval(regex.toString().replace(/\s+/g, '\\s*'));
+			}
+		</script>
+	</body>
+</html>
