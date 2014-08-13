@@ -10,6 +10,7 @@
 		<a href="#">Bookmarklet</a>
 		<button>Update</button><br>
 		<textarea cols=100 rows=30></textarea>
+		<div id="preview"></div>
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 		<script>
 			$(function() {
@@ -36,6 +37,7 @@
 						success: function (data, textStatus, xhr) {
 							$('a').prop('href', 'javascript:' + data.replace(/\n/g, ' '));
 							$div.html('updated!');
+							$('#preview').text(data.replace(/\n/g, ' '));
 						},
 						error: function () {
 							console.log('Some error happened');
